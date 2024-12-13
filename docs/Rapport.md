@@ -200,65 +200,88 @@ firewall-cmd --zone=public --add-port=25545/tcp
 
 ## <a name="p8"></a> Qualité et test de performance 
 
-Nous aimerions faire en sorte de pouvoir comparer les deux codes et sorties plus facilement alors nous allons modifier les codes assignment102.java  et Pi.java afin d’obtenir les mêmes sorties même affichage du temps d’exécution, du nombre d’itération, du nombre de processus, erreur.
+Dans cette partie, nous allons effectuer des tests de performance afin de tester la capacité de notre système à fonctionner efficacement sous différentes conditions des classes énumérées précédemment : Assignment102.java, Pi.java, MasterSocket.java et WorkerSocket.java 
 
-````
-public class Assignment102 {
-	public static void main(String[] args) {
-		int numIterations = 500000;
-		PiMonteCarlo PiVal = new PiMonteCarlo(numIterations);
-		long startTime = System.currentTimeMillis();
-		double value = PiVal.getPi();
-		long stopTime = System.currentTimeMillis();
-		System.out.println("Pi:" + value);
-		System.out.println("Time Duration: " + (stopTime - startTime) + "ms");
-		System.out.println("Ntot : " + numIterations);
-		System.out.println("Available processors: " + Runtime.getRuntime().availableProcessors());
-		System.out.println("Nombre de points : " + PiVal.nAtomSuccess);
-		System.out.println("Error: " + ((value - Math.PI) / Math.PI));
-		System.out.println("Difference to exact value of pi: " + (value - Math.PI));
-	}
-}
-````
+Les tests ci-dessous et les graphiques ont été réalisé sur mon architecture personnelle, il est important de spécifier les caractéristiques ci-dessous puisque d'une machine à une autre tout peu changer
 
-````
-long stopTime = System.currentTimeMillis();
+Les caractéristiques : 
 
-	System.out.println("\nPi : " + pi );
+|Elements| Architecture | 
+|--------|-----|
+| Processeur   | Intel(R) Core(TM) i5-8265U CPU @ 1.60GHz   1.80 GHz  | 
+| Mémoire RAM  | 8,00 Go  | 
+| Nombre de coeurs | 4  | 
+| Nombre de Threads | 8  | 
 
-	System.out.println("Time duration : " + (stopTime - startTime));
+Le but était de réaliser des tests de performance en illustrant la scalabilité forte et faible à travers des graphique pour les classes évoquées précédemment. 
 
-	System.out.println("Ntot: " + totalCount*numWorkers);
+- Scalabilité forte : Vise à réduire le temps d'exécution d'une charge de travail donnée en augmentant les ressources.
 
-	System.out.println("Available processors: " + numWorkers);
+- Scalabilité faible : Vise à maintenir les performances constantes malgré une augmentation de la charge de travail, en ajoutant des ressources.
+ 
+ Pour cela, il fallait déterminer certains facteurs notamment le speedup. 
 
-	System.out.println("Nombre de points: " + total);
+Le speedup est utilisé pour évaluer l'efficacité du parallélisme dans les calculs. Il mesure le gain de performance obtenu en augmentant le nombre de cœurs utilisés.
+Il se calcule par la formule suivante : 
 
-	System.out.println("Error: " + (Math.abs((pi - Math.PI)) / Math.PI) +"\n");
+```
+speedUp = Temps 1coeurs / Temps nCoeurs
+```
 
-	System.out.println("Différence : " + (pi - Math.PI));
-````
+### Assignment102 
 
-Puis faire un fichier avec les données pour les comparer (Assignment102 a été fait, le faire pour Pi)
+* Scalabilité forte 
 
-Bonne Scalabilité forte et faible : 
-faire des tests pour 1,2, 4 workers avec le même nombre d'itérations 
-Regarder les informations et comment on passe de données à d'autres données
+Tests effectués : 
 
-On peut ajouter des graphiques 
+| **numIterations** | **nbProcessor**                                | **Time Duration** |
+|-------------------|------------------------------------------------|-------------------|
+| 1 000 000         | 1 | 195.8 ms             |
+| 1 000 000           | 2  | 247,4 ms             |
+| 1 000 000        | 4      | 476,2 ms             |
+| 1 000 000         | 8      | 553,2 ms             |
+| 1 000 000         | 16    | 533,8 ms            |
 
-TP 4 : on veut envoyer des messages en utilisant la mémoire distribuée
+<img height="300" width="600" src="../img/stabForteAssignment102.png" title="logo vélizy"/>
+<br><br>
 
-On télécharge le zip contenant les classes MasterSocket et WorkerSocket 
-Buffer : fichier (socket) en mémoire où l'on écrit et lit. 
+* Scalabilité faible 
 
-Dans la classe Master, on s'occupe d'initialiser les sockets, d'envoyer des sockets et de recevoir des messages du serveur
-Le worker quant à lui doit simplement attendre un message pour pouvoir faire quelque chose
+| **numIterations** | **nbProcessor**                                | **Time Duration** |
+|-------------------|------------------------------------------------|-------------------|
+| 1 000 000         | 1 | 177.8 ms             |
+| 2 000 000           | 2  | 535.2 ms             |
+| 4 000 000        | 4      | 1923 ms             |
+| 8 000 000         | 8      | 4835.2 ms             |
+| 16 000 000         | 16    | 9770.4 ms            |
 
-Pour pouvoir lire et écrire on créer des InputStreamReader et InputStreamWriter
+<img height="300" width="600" src="../img/stabFaibleAssignment102.png" title="logo vélizy"/>
+<br>
 
-Faire un diagramme des classes et analyser le code 
-in.readLine() : on attend un message
-out.println() : envoie de message 
+### PI
 
-executer le code et voir si ça fonctionne 
+* Scalabilité forte  
+
+| **numIterations** | **nbProcessor**                                | **Time Duration** |
+|-------------------|------------------------------------------------|-------------------|
+| 1 000 000         | 1 | 516.4 ms             |
+| 1 000 000           | 2  | 231.2 ms             |
+| 1 000 000        | 4      | 200 ms             |
+| 1 000 000         | 8      | 103.6 ms             |
+| 1 000 000         | 16    | 131 ms            |
+
+<img height="300" width="600" src="../img/stabFortePI.png" title="logo vélizy"/>
+<br><br>
+
+* Scalabilité faible  
+
+| **numIterations** | **nbProcessor**                                | **Time Duration** |
+|-------------------|------------------------------------------------|-------------------|
+| 1 000 000         | 1 | 63.8 ms             |
+| 1 000 000           | 2  | 72.6 ms             |
+| 1 000 000        | 4      | 71 ms             |
+| 1 000 000         | 8      | 103.2 ms             |
+| 1 000 000         | 16    | 196.6 ms            |
+
+<img height="300" width="600" src="../img/stabFaiblePI.png" title="logo vélizy"/>
+<br><br>
