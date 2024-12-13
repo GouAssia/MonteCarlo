@@ -17,12 +17,12 @@ Ce document permet de mettre en avant ce qui a été vu lors des séances de TP 
 - ### [I - Introduction](#p1)
 - ### [II - TP](#p2)
     - ### [Méthode Monte Carlo](#p3)
+	- ### [Algorithme et parallélisation](#p3A)
     - ### [Mise en oeuvre sur machine à mémoire partagée (Assignment102.java) ](#p4)
     - ### [Mise en oeuvre sur machine à mémoire partagée (Pi.java) ](#p5)
-    - ### [Qualité et test de performance ](#p6)
-    - ### [Mise en oeuvre en mémoire distribuée](#p7)
-    - ### [Sixième séance de TP ](#p8)
-- ### [III - Qualité de développement](#p3)
+    - ### [Mise en oeuvre en mémoire distribuée](#p6)
+    - ### [Communication avec d'autres machines ](#p7)
+	- ### [Qualité et test de performance ](#p8)
 
 <br><br><br>
 
@@ -30,15 +30,14 @@ Ce document permet de mettre en avant ce qui a été vu lors des séances de TP 
 
 ## <a name="p1"></a> I - Introduction
 
-Dans ce document, nous avons commencé par introduire 
+Dans ce document, nous avons commencé par introduire la méthode de Monte Carlo qui est une technique statistique utilisée pour résoudre des problèmes mathématiques complexes en faisant des simulations aléatoires. 
 
 ## <a name="p2"></a> II - TP
 
 ## <a name="p3"></a> Méthode Monte Carlo
-
-Durant cette première séance de TP, la méthode de Monte Carlo nous a été introduite. 
-sur papier 
 ----------
+
+## <a name="p3A"></a> Alogorithme et parallélisation
 
 ## <a name="p4"></a> Mise en oeuvre sur machine à mémoire partagée (Assignment102.java)
 
@@ -76,44 +75,130 @@ Dans cette classe, qui va être exécutée par chaque Thread, on définit un poi
 
 ### Assignment102
 
-Elle permet de réaliser l'affichage de données de la méthode Monte Carlo notamment dans un fichier csv.
+Elle permet de réaliser l'affichage de données telles que le nombre d'itérations, la valeur de Pi ou le temps d'exécution de la méthode Monte Carlo notamment dans un fichier csv.
 
 ### Diagramme de classe Assignment102.java
 
 
 ## <a name="p5"></a> Mise en oeuvre sur machine à mémoire partagée (Pi.java) 
 
-Utiliser la javadoc Executor 
-suivi le cours sur Executor "cours.md"
+Une fois que nous avons analysé le code Assignment102.java, nous allons procéder à l'analyse de Pi.java. Tout d'abord, en observant l'architecture et la structure du code on s'aperçoit qu'il s'agit d'un paradigme Master/Worker. 
 
-Au lieu de regarder ceux qui sont dans le quart de cercle on peut regarder ceux qui ne sont pas dedans. 
+<img height="200" width="250" src="../img/schema.jpg">
 
-Analyse Pi.java : 
-Diagramme des classes sur lucidchart
+### Pi 
 
-Il s'agit d'un paradigme Master/Worker
-total = ncible
-totalCount / nb Worker = ntotal
+La classe Pi est une classe de test, elle va afficher les résultats de l'exécution 5 fois en ayant spécifier le nombre de workers et le nombre d'itérations que chaque worker devra effectuer. Ici, grâce aux explications sur la méthode Monte Carlo, on affirme que le nombre d'itérations que chaque worker devra effectuer est ntotal et que total est ncible. 
 
-Class Pi : classe de test 
-Class Master : on mesure le temps puis on crée une collection de tâches renvoyer des resultats de type Long 
-on va associé les tâches aux exectors 
-On met un nombre de tâches égal à celui de threads 
-On créer une liste de résultats qui vont apparaitre dans le futur en lui donnant toutes les tâches
-Pour chaque future on fait un get et on ajoute le résultat dans total
-Puis on calcule PI
+### Master 
+ 
+La classe Master gère la distribution des tâches aux workers et l'agrégation des résultats. 
 
-Conclusion : Paradigme Master Worker qui repose sur des futures 
-un master qui créer des tâches, les lance et on récupère le résultat de ces tâches (avec futures)
+On commence par mesurer le temps actuel en millisecondes puis on crée une collection, une liste de tâches qui renvoyeront des résultats de type Callable<Long>. Chaque tâche correspond à un worker qui effectue un certain nombre d'itérations dans la simulation de Monte Carlo pour estimer π. Puis, un ExecutorService est crée et qui va être associé aux tâches. Ainsi, il va exécuter toutes les tâches en parallèle via la méthode invokeAll(). 
+Une fois que toutes les tâches sont exécutées, les résultats vont apparaitre dans le future et seront récupérés et ajoutés dans total.
 
-Class Worker : 
-CircleCount = le nombre de points dans la cible
+Suivant du calcul de Pi, des données telles que la valeur de Pi, le temps d'exécution ou le nombre de processeurs sont affichées dans un fichier csv comme dans la classe Assignment102.
 
-Pourquoi Master/Worker plus intéressant et performant?
-on fait le choix de répartir le travail et de moins chargé les coeurs
-temps d'ordonnancement plus long que le temps de calcul 
+### Callable 
 
-## <a name="p6"></a> Qualité et test de performance 
+L'interface Callable est similaire à Runnable. Cependant, elle peut retourner un résultat. Elle est utilisée pour des tâches qui peuvent s'exécuter en parallèle et qui ont une valeur de retour (ici <long>).
+
+### Future 
+
+Le but de Future est de fournir un moyen de gérer le résultat d'une tâche qui sera exécutée de manière asynchrone (dans un autre thread). Future permet de vérifier si la tâche est terminée, peut annuler une tâche si nécessaire et récupère le résultat de la tâche une fois terminée. 
+
+### Worker  
+
+La classe Worker peut être exécutée en parallèle dans un autre thread et retourne un résultat de type <Long>. 
+La méthode Call() génère aléatoirement des points de coordonnées x et y. Puis elle vérifie si ses points se trouvent dans la cible. Si ils sont présents dedans, on incrémente le compteur circleCount qui représente le nombre de points dans la cible. 
+
+
+### Pourquoi le paradigme Master/Worker est plus intéressant et performant? 
+
+Il est plus intéressant et plus performant puisqu'on fait le choix de répartir le travail en plusieurs travailleurs et de moins chargé les coeurs. 
+
+## <a name="p6"></a> Mise en oeuvre en mémoire distribuée
+
+### 1. Contextualisation
+
+Pour réaliser la méthode Monte Carlo en mémoire distribuée, nous avons récupéré les classes *MasterSocket.java* et *WorkerSocket*. 
+En mémoire distribuée, on travaille par envoie de messages entre un serveur et un client à travers l'intermédiaire de Socket. 
+Un Socket est un fichier contenant des informations telles que la source et le contenu de l'envoi ou encore le destinateur avec des flux qui permet l'échange de données entre deux applications. On manipule ses flux en faisant une lecture ou écriture dessus.
+
+### 2. Paradigme Master/Worker
+
+Le paradigme utilisé est Master/Worker. Le Master distribue le calcul entre plusieurs workers, qui calculent chacun une partie du travail. Ces workers envoient leur résultat au Master qui le récupère pour obtenir l'estimation finale de PI.
+L'utilisation de ce paradigme et de plusieurs workers permettent d'exécuter des parties du code simultanément, d'améliorer l'efficacité du code et de réduire le temps global d'exécution. 
+
+Dans le contexte de ses classes, la classe WorkerSocket écoute un port spécifique et attend une connexion du Master et la classe MasterSocket se connecte aux workers via leurs ports.
+
+### 3. Explication des classes 
+
+### 3.1 MasterSocket
+
+Cette classe MasterSocket contient 7 champs statiques : le nombre maximum de worker *maxServer*, des ports que les workers utilisent pour communiquer avec le client *tab_port* mais également un tableau contenant les résultats envoyés par chaque worker *tab_total_workers*. 
+Nous avons aussi l'adresse IP et des tableaux pour gérer les entrées et sorties et les connexions de socket.
+
+Le programme va demander à l'utilisateur de rentrer le nombre de worker qu'il souhaite utiliser et enregistre la valeur. Par la suite, on effectue une connexion avec chaque worker en utilisant un socket qui se connecte à L'IP du client et le port spécifié parmis la liste *tab_port*. Les messages des worker sont lus avec *reader* et envoyés avec *writer*. 
+Dans la boucle while, on répète le calcul de PI autant de fois que l'on veut et on additionne les résultats de chaque worker pour faire une estimation globale de la valeur de PI. 
+
+BufferRead est utilisé pour lire des données, un texte provenant de l'entrée au clavier de l'utilisateur dans le programme. BufferWriter quant à lui est utilisé pour envoyé des données à un worker via un flux de sortie. 
+
+### 3.2 WorkerSocket 
+
+On commence par définir le port sur lequel le serveur va écouté les connexions entrantes. 
+
+Un objet ServeurSocket est crée pour écouter sur le port spécifié. Le serveur attend qu'un client se connecte avec accept(). On peut lire les données envoyées par le client avec BufferedReader et envoyé des réponses avec PrintWriter. 
+Enfin, tant que le message reçu n'est pas "END", le serveur effectue le calcul de PI à l'aide de la méthode doRun et envoie le résultat. 
+
+### 3.3 Application 
+
+Nous avons commencer par essayer d'exécuter le code WorkerSocket sauf que nous ne pouvions pas passer 2 arguments à la méthode main. Ce qui a été fait est que nous avons editer dans configurations/programs/arguments, nous avons mis le port à 25545 par exemple. 
+Puis, on s'aperçoit quand relançant le code on reçoit bien le port indiqué. 
+
+Pour établir, la connexion entre le Master et un Worker, on lance la classe MasterSocket en précisant 1 pour le nombre de worker suivi du port 25545 qui a été ouvert précédemment. 
+
+Pour lancer plusieurs workers, dans la configuration, nous allons ajouter une nouvelle application et définir un nouveau port en plus de celui précédent. En exécutant MasterSocket, au lieu de préciser 1 seul worker dans la console, on en met 2. Enfin, on entre les deux ports l'un à la suite de l'autre. 
+
+
+Remarque : On modifie la conception du code
+
+Ce qu'il faut faire il faut que le masterSocket écrive dans un fichier les résultats que leur envoie chaque worker concernant le calcul de Pi avec un seul Thread par worker 
+Reprendre les tableaux que nous avions fait en qualité dev et faire les tests 
+mais cette fois-ci c'est en mémoire distribuée avec Socket et par envoie de message 
+
+
+## <a name="p7"></a> Communication avec d'autres machines 
+
+Durant une des séances de TP, nous avons fait en sorte d'établir une communication entre différentes machines de la salle à l'aide de leur adresse IP. 
+
+Nous avons basculé sur CentOs et tenter d'installer Java sur celui-ci avec la commande suivante :
+
+```
+yum install java-devel
+```
+Une fois Java installé, nous avons récupérer le dossier *distributedMC_step1_javaSocket* fourni par notre professeur pour récupérer le MakeFile
+
+Par la suite, nous avons effectuer des tests du code Java des deux classes avec : 
+
+```
+ java WorkerSocket.java 25545
+```
+
+et : 
+
+```
+ java MasterSocket.java 
+```
+Suivi du nombre de worker et l'adresse Ip de la machien ayant lancé le port 25545
+
+Nous avons rencontrer quelques problèmes à exécuter ses codes car il fallait désactiver le parfeu sur les machines : 
+
+```
+firewall-cmd --zone=public --add-port=25545/tcp
+```
+
+## <a name="p8"></a> Qualité et test de performance 
 
 Nous aimerions faire en sorte de pouvoir comparer les deux codes et sorties plus facilement alors nous allons modifier les codes assignment102.java  et Pi.java afin d’obtenir les mêmes sorties même affichage du temps d’exécution, du nombre d’itération, du nombre de processus, erreur.
 
@@ -177,98 +262,3 @@ in.readLine() : on attend un message
 out.println() : envoie de message 
 
 executer le code et voir si ça fonctionne 
-
-## <a name="p7"></a> Mise en oeuvre en mémoire distribuée
-
-### 1. Contextualisation
-
-Pour réaliser la méthode Monte Carlo en mémoire distribuée, nous avons récupéré les classes *MasterSocket.java* et *WorkerSocket*. 
-En mémoire distribuée, on travaille par envoie de messages entre un serveur et un client à travers l'intermédiaire de Socket. 
-Un Socket est un fichier contenant des informations telles que la source et le contenu de l'envoi ou encore le destinateur avec des flux qui permet l'échange de données entre deux applications. On manipule ses flux en faisant une lecture ou écriture dessus.
-
-### 2. Paradigme Master/Worker
-
-Le paradigme utilisé est Master/Worker. Le Master distribue le calcul entre plusieurs workers, qui calculent chacun une partie du travail. Ces workers envoient leur résultat au Master qui le récupère pour obtenir l'estimation finale de PI.
-L'utilisation de ce paradigme et de plusieurs workers permettent d'exécuter des parties du code simultanément, d'améliorer l'efficacité du code et de réduire le temps global d'exécution. 
-
-Dans le contexte de ses classes, la classe WorkerSocket écoute un port spécifique et attend une connexion du Master et la classe MasterSocket se connecte aux workers via leurs ports.
-
-### 3. Explication des classes 
-
-### 3.1 MasterSocket
-
-Cette classe MasterSocket contient 7 champs statiques : le nombre maximum de worker *maxServer*
-
-### 3.2 Application 
-
-
-On doit passer 2 arguments à la méthode main 
-On lance la méthode main de workerSocket 
-On s'aperçoit que cela ne fonctionne pas alors on va dans run/edit configurations/programs arguments, on met le port 25545
-Puis on re run et on reçoit bien le port 25545 
-On lance le MasterSocket et on entre 1 pour le nombre de worker et on entre le port 25545
-
-Si on veut lancer plusieurs workers, on va commencé par lancer un worker avec le port 25545 par exemple 
-Puis une fois lancé, on edit la configuration et on met un autre port 25546 par exemple puis on relance un autre worker
-Enfin, on run masterSocket on entre 2 worker et les ports 25545 et 25546. 
-Ou l'on peut simplement dans edit configuration ajouté une nouvelle application "Worker2"
-
-Maintenant, on va modifier WorkerSocket pour calculer Pi 
-Pour ça on va remplir dans WorkerSocket la partie Todo : compute pour faire le calcul 
-
-
-Remarque : On modifie la conception du code
-
-Ce qu'il faut faire il faut que le masterSocket écrive dans un fichier les résultats que leur envoie chaque worker concernant le calcul de Pi avec un seul Thread par worker 
-Reprendre les tableaux que nous avions fait en qualité dev et faire les tests 
-mais cette fois-ci c'est en mémoire distribuée avec Socket et par envoie de message 
-
-Tests :
-
-Pour : 16000000
-Worker :  1
-Pi : 3.14177025
-
-Pour : 16000000
-Worker :  2
-Pi : 
-
-Pour : 160000000
-Pi : 3.141615875
-
-Si on rajoute un 0 en plus Pi devient négatif 
-Si on retire ce 0, on obtient 
-
-Pour : 160000000
-Pi : 3.141538025
-
-Si on met plusieurs worker par exemple 2, on s'aperçoit que Pi est multiplié par 2
-Cela fonctionne bien pour 160000000 mais si on rajoute un 0, on obtient -2.22711204875. 
-Le problème est le int alors on va le modifier en long partout
-Maintenant on obtient la bonne valeur de PI 
-
-
-Evolution du temps d'exécution : 
-
-Premier lancement : 50713 ms 
-Deuxième lancement : 45360 ms
-
-## <a name="p8"></a> Sixième séance de TP 
-
-Dans cette séance, nous avons mis au propre et présenter la conception, le paradigme choisi pour les codes MasterSocket et WorkerSocket. La partie qui an été modifié est présente dans la séance cinq. 
-
-Faire en sorte de modifier le code pour ajouter l'adresse IP pour communiquer avec d'autres machines 
-avec ping 
-
-Commandes : 
-
-yum install java-devel => installer java sur CentOs
-Puis il faut récupérer le MakeFile mais tout le dossier distributedMC_step1_javaSocket
-On ouvre un terminal dans ce dossier et on teste le code WorkerSocket sur une machine : java WorkerSocket.java 25545
-
-Puis sur une autre machine on débloque le firewall : firewall-cmd --zone=public --add-port=25545/tcp
-Sur la même machine, on teste la classe MasterSocket : java MasterSocket.java
-On commence avec 1 worker 
-Puis on entre l'adresse Ip de l'autre machine : 192.168.24.131
-
-

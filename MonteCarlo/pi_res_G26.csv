@@ -1,4 +1,0 @@
-Nombre d'itérations,Pi,Time Duration,Available Processors,Nombre de points dans le cercle,Error
-1000000,3,139160,109ms,8,784790,000774
-1000000,3,140412,422ms,8,785103,-0,000376
-1000000,3,141860,636ms,8,785465,0,000085

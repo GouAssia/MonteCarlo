@@ -15,11 +15,17 @@ public class Pi
 {
     public static void main(String[] args) throws Exception 
     {
-	long total=0;
+	int numWorker = 16;
+	int totalCount = 10000000 / numWorker;
+		//int totalCount = 10000000;
+	long total = 0;
 	// 10 workers, 50000 iterations each
-	total = new Master().doRun(50000, 2);
+	for (int i = 0; i < 5; i++) {
+		total = new Master().doRun(totalCount, numWorker);
+
 	System.out.println("total from Master = " + total);
-    }
+    	}
+	}
 }
 
 /**
@@ -53,11 +59,14 @@ class Master {
 	    }
 	double pi = 4.0 * total / totalCount / numWorkers;
 
-	long stopTime = System.currentTimeMillis();
+	String outputFilePath = "Pi_stabForte_PCperso.csv";
 
+	long stopTime = System.currentTimeMillis();
+	long duration = stopTime - startTime;
+	
 	System.out.println("\nPi : " + pi );
 
-	System.out.println("Time duration : " + (stopTime - startTime));
+	System.out.println("Time duration : " + duration);
 
 	System.out.println("Ntot: " + totalCount*numWorkers);
 
@@ -69,8 +78,7 @@ class Master {
 
 	System.out.println("Différence : " + (pi - Math.PI));
 
-
-	//System.out.println( (Math.abs((pi - Math.PI)) / Math.PI) +" "+ totalCount*numWorkers +" "+ numWorkers +" "+ (stopTime - startTime));
+	WriteFile.writeResult(outputFilePath, (int)(totalCount * numWorkers), pi, duration, new PiMonteCarlo(0, numWorkers), numWorkers);
 
 	exec.shutdown();
 	return total;
