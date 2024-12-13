@@ -242,7 +242,7 @@ Tests effectués :
 | 1 000 000         | 8      | 553,2 ms             |
 | 1 000 000         | 16    | 533,8 ms            |
 
-<img height="300" width="600" src="../img/stabForteAssignment102.png" title="logo vélizy"/>
+<img height="300" width="600" src="../img/stabForteAssignment102.png" title="stab forte Assign"/>
 <br><br>
 
 * Scalabilité faible 
@@ -255,7 +255,7 @@ Tests effectués :
 | 8 000 000         | 8      | 4835.2 ms             |
 | 16 000 000         | 16    | 9770.4 ms            |
 
-<img height="300" width="600" src="../img/stabFaibleAssignment102.png" title="logo vélizy"/>
+<img height="300" width="600" src="../img/stabFaibleAssignment102.png" title="stab faible Assign"/>
 <br>
 
 ### PI
@@ -270,7 +270,7 @@ Tests effectués :
 | 1 000 000         | 8      | 103.6 ms             |
 | 1 000 000         | 16    | 131 ms            |
 
-<img height="300" width="600" src="../img/stabFortePI.png" title="logo vélizy"/>
+<img height="300" width="600" src="../img/stabFortePI.png" title="stab forte PI"/>
 <br><br>
 
 * Scalabilité faible  
@@ -283,5 +283,5 @@ Tests effectués :
 | 1 000 000         | 8      | 103.2 ms             |
 | 1 000 000         | 16    | 196.6 ms            |
 
-<img height="300" width="600" src="../img/stabFaiblePI.png" title="logo vélizy"/>
+<img height="300" width="600" src="../img/stabFaiblePI.png" title="stab Faible PI"/>
 <br><br>
