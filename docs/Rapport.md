@@ -31,6 +31,7 @@ Ce document permet de mettre en avant ce qui a été vu lors des séances de TP 
 ## <a name="p1"></a> I - Introduction
 
 Dans ce document, nous avons commencé par introduire la méthode de Monte Carlo qui est une technique statistique utilisée pour résoudre des problèmes mathématiques complexes en faisant des simulations aléatoires. 
+Par la suite, nous avons à l'aide de cette méthode réalisée des tests de performance en mémoire partagée et distribuée. 
 
 ## <a name="p2"></a> II - TP
 
@@ -211,7 +212,23 @@ Nous avons pu réalisé des expériences avec mes collègues qui seront présent
 
 ## <a name="p8"></a> Qualité et test de performance 
 
-Dans cette partie, nous allons effectuer des tests de performance afin de tester la capacité de notre système à fonctionner efficacement sous différentes conditions des classes énumérées précédemment : Assignment102.java, Pi.java, MasterSocket.java et WorkerSocket.java 
+Dans cette partie, nous allons nous appuyer sur la norme ISO 25010 qui définit un modèle de qualité pour les logiciels. Nous allons nous attarder plus précisément sur la sous-caractéristique "Efficiency" de la section "Quality in use". Efficiency mesure la performance du logiciel lorsqu'il est utilisé par plusieurs utilisateurs en prenant en compte les facteurs tels que la vitesse, la productivité ou le temps. 
+
+Le temps se calcule de la manière suivante : 
+```
+Temps (speed up)  = Tt / Ta
+
+on a : 
+- Tt : Target Time 
+- Ta : Actual Time
+
+```
+A partir de ça, on peut déterminer l'erreur relative "Task Time"
+
+```
+(Tt-Ta)/Tt
+```
+Pour commencer, nous allons effectuer des tests de performance afin de tester la capacité de notre système à fonctionner efficacement sous différentes conditions des classes énumérées précédemment : Assignment102.java, Pi.java, MasterSocket.java et WorkerSocket.java 
 
 Les tests ci-dessous et les graphiques ont été réalisé sur mon architecture personnelle, il est important de spécifier les caractéristiques ci-dessous puisque d'une machine à une autre tout peu changer
 
@@ -253,7 +270,7 @@ Tests effectués :
 | 1 000 000         | 8      | 553,2 ms             |
 | 1 000 000         | 16    | 533,8 ms            |
 
-<img height="300" width="600" src="../img/stabForteAssignment102.png" title="scalabilite forte"/>
+<img height="300" width="600" src="../img/stabForteAssignment102.PNG" title="scalabilite forte"/>
 <br>
 On observe que notre droite speed up ne suit pas la droite idéale (en bleue) ce qui signifie une performance mauvaise lorsque l'on augmente le nombre de processeurs (on le double). En effet, on voit une staturation car au fur et à mesure qu'on double le nombre de processeurs le speed up stagne autour de 1 et n'évolue pas. 
 <br><br>
@@ -268,7 +285,7 @@ On observe que notre droite speed up ne suit pas la droite idéale (en bleue) ce
 | 8 000 000         | 8      | 4835.2 ms             |
 | 16 000 000         | 16    | 9770.4 ms            |
 
-<img height="300" width="600" src="../img/stabFaibleAssignment102.png" title="scalabilite Faible"/>
+<img height="300" width="600" src="../img/stabFaibleAssignment102.PNG" title="scalabilite Faible"/>
 <br>
 On observe une chute du Speed up lorsque le nombre de processeurs augmente puis à partir de 8 processeurs il se stabilise mais reste mauvais. La courbe montre que le programme ne parvient pas à maintenir ses performances lorsqu'on augmente la taille du problème en même temps que le nombre de processeurs. 
 
@@ -284,7 +301,7 @@ On observe une chute du Speed up lorsque le nombre de processeurs augmente puis 
 | 1 000 000         | 8      | 103.6 ms             |
 | 1 000 000         | 16    | 131 ms            |
 
-<img height="300" width="600" src="../img/stabFortePI.png" title="scalabilite Forte"/>
+<img height="300" width="600" src="../img/stabFortePI.PNG" title="scalabilite Forte"/>
 <br>
 Nous observons que jusqu'à 2 processeurs la courbe du speed up égale celle idéale. Cependant, elle finit par subir des variations par la suite. 
 <br><br>
@@ -299,7 +316,7 @@ Nous observons que jusqu'à 2 processeurs la courbe du speed up égale celle id�
 | 1 000 000         | 8      | 103.2 ms             |
 | 1 000 000         | 16    | 196.6 ms            |
 
-<img height="300" width="600" src="../img/stabFaiblePI.png" title="scalabilite faible"/>
+<img height="300" width="600" src="../img/stabFaiblePI.PNG" title="scalabilite faible"/>
 <br>
 Nous observons une chute progressive de la courbe de speed up qui présente des résultats mauvais par rapport à celle idéale. 
 <br><br>
@@ -329,7 +346,7 @@ Tests effectués :
 | 1 000 000         | 8      | 397.4           |
 | 1 000 000         | 16    |  417.6          |
 
-<img height="350" width="600" src="../img/stabForteAssignment102G24.png" title="stab forte Assignment102 G24"/>
+<img height="350" width="600" src="../img/stabForteAssignment102G24.png"/>
 <br>
 On observe que notre droite speed up ne suit pas la droite idéale (en bleue) ce qui signifie une performance mauvaise lorsque l'on augmente le nombre de processeurs. La seule différence entre la courbe observée pour l'expérience avec mon ordinateur personnel est que de 2 à 4 la courbe est plus constante. 
 
@@ -377,7 +394,7 @@ Nous observons par rapport à la première courbe qu'elle se rapproche plus long
 | 1 000 000         | 8      |  459.4          |
 | 1 000 000         | 16    |  840.4          |
 
-<img height="350" width="600" src="../img/stabFaiblePIG24.png" title="stab Faible pi G24"/>
+<img height="350" width="600" src="../img/stabFaiblePiG24.png" title="stab Faible pi G24"/>
 <br>
 Enfin, contrairement à la courbe faite à partir des données de mon ordinateur personnel, on observe une chute directe. 
 <br><br>
@@ -405,7 +422,7 @@ De nombreux tests ont été effectué à partir d'1 à 12 machines au maximum po
 
 Avec ses données récupérées lors de l'expérience, on obtient la courbe de speed up suivante : 
 
-<img height="350" width="600" src="../img/CourbeSpeedupDistribue1.png" title="courbe speed up scalabilité forte"/>
+<img height="400" width="600" src="../img/CourbeSpeedupDistribue1.png" title="courbe speed up scalabilité forte"/>
 <br><br>
 
 * Scalabilité faible  
@@ -423,10 +440,76 @@ Avec ses données récupérées lors de l'expérience, on obtient la courbe de s
 
 Avec ses données récupérées lors de l'expérience, on obtient la courbe de speed up suivante : 
 
-<img height="350" width="600" src="../img/CourbeSpeedupDistribue.png" title="courbe speed up scalabilité forte"/>
+<img height="400" width="600" src="../img/CourbeSpeedupDistribue.png" title="courbe speed up scalabilité forte"/>
 
-### Evaluation numérique 
+### Evaluation numérique (Erreur)
 
-Dans cette partie, nous allons nous appuyer sur la norme ISO 25010 qui définit un modèle de qualité pour les logiciels. Nous allons nous attarder plus précisément sur la sous-caractéristique "Efficiency" de la section "Quality in use". 
+L'erreur est la différence qui sépare la courbe speed up qu'on obtient et la courbe idéale. Plus l'erreur est proche de 0 plus c'est bon signe. 
 
-Efficiency mesure la performance du logiciel lorsqu'il est utilisé par plusieurs utilisateurs en prenant en compte les facteurs tels que la vitesse, la productivité ou le temps. 
+Pour réaliser les nuages de points d'erreur en fonction du nombre d'itérations, j'ai utilisé les données des fichiers csv exécutés sur ma machine personnelle. 
+
+### PI
+
+* Scalabilité forte  
+
+| Nombre d'itérations | Error      |
+|----------------------|-----------|
+| 10000000            | -0,000046  |
+| 10000000            | -0,000047  |
+| 10000000            | -0,000013  |
+| 10000000            | 0,000036   |
+| 10000000            | -0,000003  |
+| 10000000            | -0,000232  |
+| 10000000            | 0,000047   |
+| 10000000            | -0,000128  |
+| 10000000            | 0,000065   |
+| 10000000            | -0,000003  |
+| 10000000            | -0,000094  |
+| 10000000            | -0,000018  |
+| 10000000            | -0,000026  |
+| 10000000            | -0,000137  |
+| 10000000            | 0,000164   |
+| 10000000            | -0,000120  |
+
+J'ai fais de même pour 20000000, 40000000, 80000000 et 160000000
+
+Nous obtenons ainsi le nuage de point suivant avec les données ci-dessus : 
+
+<img height="300" width="650" src="../img/Pi_scalForteErreur.PNG" title="erreur"/>
+
+### PI
+
+* Scalabilité faible  
+
+| Nombre d'itérations | Error     |
+|---------------------|-----------|
+| 1000000             | 0,000459  |
+| 1000000             | 0,000965  |
+| 1000000             | -0,000406 |
+| 1000000             | -0,000448 |
+| 1000000             | -0,000404 |
+| 2000000             | -0,000246 |
+| 2000000             | -0,000224 |
+| 2000000             | 0,000670  |
+| 2000000             | 0,000001  |
+| 2000000             | -0,000022 |
+| 4000000             | -0,000170 |
+| 4000000             | 0,000085  |
+| 4000000             | -0,000036 |
+| 4000000             | -0,000292 |
+| 4000000             | -0,000400 |
+| 8000000             | 0,000254  |
+| 8000000             | -0,000047 |
+| 8000000             | -0,000081 |
+| 8000000             | 0,000044  |
+| 8000000             | 0,000086  |
+| 16000000            | 0,000016  |
+| 16000000            | 0,000002  |
+| 16000000            | -0,000014 |
+| 16000000            | -0,000006 |
+| 16000000            | -0,000099 |
+
+
+Nous obtenons ainsi le nuage de point suivant avec les données ci-dessus : 
+
+<img height="300" width="650" src="../img/Pi_scalFaibleErreur.PNG" title="erreur"/>
