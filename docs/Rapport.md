@@ -52,8 +52,7 @@ Assignment102 utilise des classes de l'API concurrent tels que AtomicInteger, Ex
 AtomicInteger permet de manipuler des entiers dans un environnement multithreads. ExecutorService et Executors permettent de gérer l'exécution des tâches.
 
 Dans ce code, on peut distinguer plusieurs classes qui sont liées et interagissent pour estimer la valeur de PI en utilisant la méthode Monte-Carlo. 
-On a les classes principales : MonteCarlo, PiMonteCarlo et Assignment102. PiMonteCarlo contient la classe interne MonteCarlo.21 brd 192.168.31.255 scope global dynamic noprefixroute eno1
-
+On a les classes principales : MonteCarlo, PiMonteCarlo et Assignment102. PiMonteCarlo contient la classe interne MonteCarlo.
 
 ### PiMonteCarlo
 
@@ -77,14 +76,16 @@ Dans cette classe, qui va être exécutée par chaque Thread, on définit un poi
 
 Elle permet de réaliser l'affichage de données telles que le nombre d'itérations, la valeur de Pi ou le temps d'exécution de la méthode Monte Carlo notamment dans un fichier csv.
 
-### Diagramme de classe Assignment102.java
+<img height="400" width="600" src="../img/diagrammeClassePiAssignment102.PNG" title="diagramme de classe Pi et Assignment102"/>
 
-
+*figure 1 : Diagramme de classe des classes Assignment102 et PI*
 ## <a name="p5"></a> Mise en oeuvre sur machine à mémoire partagée (Pi.java) 
 
 Une fois que nous avons analysé le code Assignment102.java, nous allons procéder à l'analyse de Pi.java. Tout d'abord, en observant l'architecture et la structure du code on s'aperçoit qu'il s'agit d'un paradigme Master/Worker. 
 
 <img height="200" width="250" src="../img/schema.jpg">
+
+*figure 2 : Illustration du paradigme Master/Worker*
 
 ### Pi 
 
@@ -151,6 +152,12 @@ On commence par définir le port sur lequel le serveur va écouté les connexion
 Un objet ServeurSocket est crée pour écouter sur le port spécifié. Le serveur attend qu'un client se connecte avec accept(). On peut lire les données envoyées par le client avec BufferedReader et envoyé des réponses avec PrintWriter. 
 Enfin, tant que le message reçu n'est pas "END", le serveur effectue le calcul de PI à l'aide de la méthode doRun et envoie le résultat. 
 
+Voici le diagramme de classe associé à ses classes : 
+
+<img height="350" width="400" src="../img/diagrammeClasseDistribué.PNG">
+
+*figure 3 : Diagramme de classe des classes MasterSocket et WorkerSocket*
+
 ### 3.3 Application 
 
 Nous avons commencer par essayer d'exécuter le code WorkerSocket sauf que nous ne pouvions pas passer 2 arguments à la méthode main. Ce qui a été fait est que nous avons editer dans configurations/programs/arguments, nous avons mis le port à 25545 par exemple. 
@@ -198,6 +205,8 @@ Nous avons rencontrer quelques problèmes à exécuter ses codes car il fallait 
 firewall-cmd --zone=public --add-port=25545/tcp
 ```
 
+Nous avons pu réalisé des expériences avec mes collègues qui seront présents dans la section ci-dessous "Qualité et test de performance".
+
 ## <a name="p8"></a> Qualité et test de performance 
 
 Dans cette partie, nous allons effectuer des tests de performance afin de tester la capacité de notre système à fonctionner efficacement sous différentes conditions des classes énumérées précédemment : Assignment102.java, Pi.java, MasterSocket.java et WorkerSocket.java 
@@ -213,7 +222,7 @@ Les caractéristiques :
 | Nombre de coeurs | 4  | 
 | Nombre de Threads | 8  | 
 
-Le but était de réaliser des tests de performance en illustrant la scalabilité forte et faible à travers des graphique pour les classes évoquées précédemment. 
+Le but était de réaliser des tests de performance en illustrant la scalabilité forte et faible à travers des graphiques pour les classes évoquées précédemment. 
 
 - Scalabilité forte : Vise à réduire le temps d'exécution d'une charge de travail donnée en augmentant les ressources.
 
@@ -242,11 +251,7 @@ Tests effectués :
 | 1 000 000         | 8      | 553,2 ms             |
 | 1 000 000         | 16    | 533,8 ms            |
 
-<<<<<<< HEAD
-<img height="350" width="600" src="../img/stabForteAssignment102.png" title="stab forte Assignment102"/>
-=======
-<img height="300" width="600" src="../img/stabForteAssignment102.PNG" title="stab forte Assign"/>
->>>>>>> 6e60c0cb48ef5456f263bd5207ea7a312b7871e0
+<img height="300" width="600" src="../img/stabForteAssignment102.png" title="scalabilite forte"/>
 <br><br>
 
 * Scalabilité faible 
@@ -259,11 +264,7 @@ Tests effectués :
 | 8 000 000         | 8      | 4835.2 ms             |
 | 16 000 000         | 16    | 9770.4 ms            |
 
-<<<<<<< HEAD
-<img height="350" width="600" src="../img/stabFaibleAssignment102.png" title="stab faible Assignment102"/>
-=======
-<img height="300" width="600" src="../img/stabFaibleAssignment102.PNG" title="stab faible Assign"/>
->>>>>>> 6e60c0cb48ef5456f263bd5207ea7a312b7871e0
+<img height="300" width="600" src="../img/stabFaibleAssignment102.png" title="scalabilite Faible"/>
 <br>
 
 ### PI
@@ -278,11 +279,7 @@ Tests effectués :
 | 1 000 000         | 8      | 103.6 ms             |
 | 1 000 000         | 16    | 131 ms            |
 
-<<<<<<< HEAD
-<img height="300" width="600" src="../img/stabFortePI.png" title="stab Forte Pi"/>
-=======
-<img height="300" width="600" src="../img/stabFortePI.PNG" title="stab forte PI"/>
->>>>>>> 6e60c0cb48ef5456f263bd5207ea7a312b7871e0
+<img height="300" width="600" src="../img/stabFortePI.png" title="scalabilite Forte"/>
 <br><br>
 
 * Scalabilité faible  
@@ -295,8 +292,7 @@ Tests effectués :
 | 1 000 000         | 8      | 103.2 ms             |
 | 1 000 000         | 16    | 196.6 ms            |
 
-<<<<<<< HEAD
-<img height="350" width="600" src="../img/stabFaiblePI.png" title="stab Faible pi"/>
+<img height="300" width="600" src="../img/stabFaiblePI.png" title="scalabilite faible"/>
 <br><br>
 
 J'ai par la suite réalisé ses expériences sur les machines en salles TP de la salle G24 pour pouvoir comparer les deux expériences.
@@ -376,15 +372,48 @@ Différences entre les deux :
 
 Raisonnement : 
 
+
+Après avoir étudier les codes en mémoire partagée et réaliser des tests de performances, nous avons tous réalisé l'expérience en mémoire distribuée. Il s'agissait avec un Master et plusieurs workers de faire fonctionner la méthode de Monte Carlo, établir la scalabilité forte, faible et tracer la courbe de speed up. 
+De nombreux tests ont été effectué à partir d'1 à 12 machines au maximum pour obtenir les temps d'exécution. 
+
+* Scalabilité forte  
+
+| **Machines** | **Points totaux** | **Points / Worker** | **Nb Processeurs** | **Temps (ms)** |
+|--------------|-------------------|---------------------|--------------------|----------------|
+| 1            | 192000000         | 192000000           | 1                  | 5873           |
+| 1            | 192000000         | 48000000            | 4                  | 1506           |
+| 2            | 192000000         | 24000000            | 8                  | 756            |
+| 3            | 192000000         | 16000000            | 12                 | 508            |
+| 4            | 192000000         | 12000000            | 16                 | 385            |
+| 6            | 192000000         | 8000000             | 24                 | 267            |
+| 8            | 192000000         | 6000000             | 32                 | 206            |
+| 12           | 192000000         | 4000000             | 48                 | 133            |
+
+Avec ses données récupérées lors de l'expérience, on obtient la courbe de speed up suivante : 
+
+<img height="350" width="600" src="../img/CourbeSpeedupDistribue1.PNG" title="courbe speed up scalabilité forte"/>
+<br><br>
+
+* Scalabilité faible  
+
+| **Machines** | **Points totaux** | **Points / Worker** | **Nb Processeurs** | **Temps (ms)** |
+|--------------|-------------------|---------------------|--------------------|----------------|
+| 1            | 4000000           | 4000000             | 1                  | 129            |
+| 1            | 16000000          | 4000000             | 4                  | 140            |
+| 2            | 32000000          | 4000000             | 8                  | 143            |
+| 3            | 48000000          | 4000000             | 12                 | 136            |
+| 4            | 64000000          | 4000000             | 16                 | 134            |
+| 6            | 96000000          | 4000000             | 24                 | 139            |
+| 8            | 128000000         | 4000000             | 32                 | 140            |
+| 12           | 192000000         | 4000000             | 48                 | 141            |
+
+Avec ses données récupérées lors de l'expérience, on obtient la courbe de speed up suivante : 
+
+<img height="350" width="600" src="../img/CourbeSpeedupDistribue.PNG" title="courbe speed up scalabilité forte"/>
+<br><br>
+
 ### Evaluation numérique 
 
 Dans cette partie, nous allons nous appuyer sur la norme ISO 25010 qui définit un modèle de qualité pour les logiciels. Nous allons nous attarder plus précisément sur la sous-caractéristique "Efficiency" de la section "Quality in use". 
 
 Efficiency mesure la performance du logiciel lorsqu'il est utilisé par plusieurs utilisateurs en prenant en compte les facteurs tels que la vitesse, la productivité ou le temps. 
-
-
-Faire le plot de l'erreur en fonction du nombre d'itérations 
-=======
-<img height="300" width="600" src="../img/stabFaiblePI.PNG" title="stab Faible PI"/>
-<br><br>
->>>>>>> 6e60c0cb48ef5456f263bd5207ea7a312b7871e0
