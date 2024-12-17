@@ -320,7 +320,7 @@ Tests effectués :
 | 1 000 000         | 8      | 397.4           |
 | 1 000 000         | 16    |  417.6          |
 
-<img height="350" width="600" src="../img/stabForteAssignment102G24.PNG" title="stab forte Assignment102 G24"/>
+<img height="350" width="600" src="../img/stabForteAssignment102G24.png" title="stab forte Assignment102 G24"/>
 <br><br>
 
 * Scalabilité faible 
@@ -348,7 +348,7 @@ Tests effectués :
 | 1 000 000         | 8      |  131.4         |
 | 1 000 000         | 16    |  133.8       |
 
-<img height="350" width="600" src="../img/stabFortePiG24.PNG" title="stab Forte Pi G24"/>
+<img height="350" width="600" src="../img/stabFortePiG24.png" title="stab Forte Pi G24"/>
 <br><br>
 
 On observe une chute après 4 donc on s'arrête ici
@@ -391,7 +391,7 @@ De nombreux tests ont été effectué à partir d'1 à 12 machines au maximum po
 
 Avec ses données récupérées lors de l'expérience, on obtient la courbe de speed up suivante : 
 
-<img height="350" width="600" src="../img/CourbeSpeedupDistribue1.PNG" title="courbe speed up scalabilité forte"/>
+<img height="350" width="600" src="../img/CourbeSpeedupDistribue1.png" title="courbe speed up scalabilité forte"/>
 <br><br>
 
 * Scalabilité faible  
@@ -409,8 +409,7 @@ Avec ses données récupérées lors de l'expérience, on obtient la courbe de s
 
 Avec ses données récupérées lors de l'expérience, on obtient la courbe de speed up suivante : 
 
-<img height="350" width="600" src="../img/CourbeSpeedupDistribue.PNG" title="courbe speed up scalabilité forte"/>
-<br><br>
+<img height="350" width="600" src="../img/CourbeSpeedupDistribue.png" title="courbe speed up scalabilité forte"/>
 
 ### Evaluation numérique 
 
