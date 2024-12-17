@@ -39,29 +39,41 @@ class PiMonteCarlo {
 }
 
 public class Assignment102 {
-	public static void main(String[] args) {
-		System.out.println(Integer.parseInt(args[0]));
-		for (int i = 0; i < 5; i++) {
-		int numIterations = 16000000;
-		int nbProcessor = 16;
-		PiMonteCarlo PiVal = new PiMonteCarlo(numIterations, nbProcessor);
+    public static void main(String[] args) {
+        // Vérifier si les arguments sont passés
+        int numIterations = 16000000; // valeur par défaut
+        if (args.length > 0) {
+            try {
+                numIterations = Integer.parseInt(args[0]);
+                System.out.println("Nombre d'itérations: " + numIterations);
+            } catch (NumberFormatException e) {
+                System.out.println("Argument invalide pour le nombre d'itérations. Utilisation de la valeur par défaut.");
+            }
+        } else {
+            System.out.println("Aucun argument fourni, utilisation de la valeur par défaut pour les itérations.");
+        }
 
-		String outputFilePath = "assignment102_stabFaible_PCperso.csv";
+        int nbProcessor = 16; // Nombre de processeurs, vous pouvez l'ajuster ici ou via des arguments
 
-		long startTime = System.currentTimeMillis();
-		double value = PiVal.getPi();
-		long stopTime = System.currentTimeMillis();
-		long duration = stopTime - startTime;
+        for (int i = 0; i < 5; i++) {
+            PiMonteCarlo PiVal = new PiMonteCarlo(numIterations, nbProcessor);
 
-		WriteFile.writeResult(outputFilePath, numIterations, value, duration, PiVal, nbProcessor);
+            String outputFilePath = "assignment102_stabFaible_G24.csv";
 
-		System.out.println("Nombre d'itérations (Ntot): " + numIterations);
-		System.out.println("Pi: " + value);
-		System.out.println("Time Duration: " + duration + "ms");
-		System.out.println("Nombre processeur: " + nbProcessor);
-		System.out.println("Nombre de points : " + PiVal.nAtomSuccess);
-		System.out.println("Error: " + ((value - Math.PI) / Math.PI));
-		//System.out.println("Difference to exact value of pi: " + (value - Math.PI));
-		}
-	}
+            long startTime = System.currentTimeMillis();
+            double value = PiVal.getPi();
+            long stopTime = System.currentTimeMillis();
+            long duration = stopTime - startTime;
+
+            // Appel à WriteFile.writeResult pour enregistrer les résultats (assurez-vous que cette classe existe)
+            WriteFile.writeResult(outputFilePath, numIterations, value, duration, PiVal, nbProcessor);
+
+            System.out.println("Nombre d'itérations (Ntot): " + numIterations);
+            System.out.println("Pi: " + value);
+            System.out.println("Temps écoulé: " + duration + "ms");
+            System.out.println("Nombre de processeurs: " + nbProcessor);
+            System.out.println("Nombre de points : " + PiVal.nAtomSuccess);
+            System.out.println("Erreur: " + ((value - Math.PI) / Math.PI));
+        }
+    }
 }

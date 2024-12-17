@@ -31,6 +31,9 @@ def plot_scalability(csv_file, group_size=5):
     print(speedup)
     print(nbProcessor)
 
+    # Extraire l'erreur
+    errors = df["Error"].tolist()
+
     # Tracer le graphique
     plt.figure(figsize=(10, 6))
 
@@ -40,14 +43,16 @@ def plot_scalability(csv_file, group_size=5):
     # Courbe y = x
     plt.plot(nbProcessor, nbProcessor, label="Droite linéaire", color='b', linestyle='--')
 
+    plt.scatter(nbProcessor, errors, color='b', label="Erreur relative", marker='x')
+
     # Configuration du graphique
-    plt.title("PI : Scalabilité forte", fontsize=14)
+    plt.title("Pi salle G24 : Scalabilité forte", fontsize=14)
     plt.xlabel("Nombre de processeurs", fontsize=12)
-    plt.ylabel("Speedup", fontsize=12)
+    plt.ylabel("SpeedUp / Erreur relative", fontsize=12)
     plt.legend()
     plt.grid(True)
 
     # Afficher le graphique
     plt.show()
 
-plot_scalability("Pi_stabForte_PCperso.csv")
+plot_scalability("Pi_stabForte_G24.csv")

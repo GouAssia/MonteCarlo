@@ -242,7 +242,7 @@ Tests effectués :
 | 1 000 000         | 8      | 553,2 ms             |
 | 1 000 000         | 16    | 533,8 ms            |
 
-<img height="300" width="600" src="../img/stabForteAssignment102.png" title="logo vélizy"/>
+<img height="350" width="600" src="../img/stabForteAssignment102.png" title="stab forte Assignment102"/>
 <br><br>
 
 * Scalabilité faible 
@@ -255,7 +255,7 @@ Tests effectués :
 | 8 000 000         | 8      | 4835.2 ms             |
 | 16 000 000         | 16    | 9770.4 ms            |
 
-<img height="300" width="600" src="../img/stabFaibleAssignment102.png" title="logo vélizy"/>
+<img height="350" width="600" src="../img/stabFaibleAssignment102.png" title="stab faible Assignment102"/>
 <br>
 
 ### PI
@@ -270,7 +270,7 @@ Tests effectués :
 | 1 000 000         | 8      | 103.6 ms             |
 | 1 000 000         | 16    | 131 ms            |
 
-<img height="300" width="600" src="../img/stabFortePI.png" title="logo vélizy"/>
+<img height="300" width="600" src="../img/stabFortePI.png" title="stab Forte Pi"/>
 <br><br>
 
 * Scalabilité faible  
@@ -283,5 +283,91 @@ Tests effectués :
 | 1 000 000         | 8      | 103.2 ms             |
 | 1 000 000         | 16    | 196.6 ms            |
 
-<img height="300" width="600" src="../img/stabFaiblePI.png" title="logo vélizy"/>
+<img height="350" width="600" src="../img/stabFaiblePI.png" title="stab Faible pi"/>
 <br><br>
+
+J'ai par la suite réalisé ses expériences sur les machines en salles TP de la salle G24 pour pouvoir comparer les deux expériences.
+
+Les caractéristiques : 
+
+|Elements| Architecture | 
+|--------|-----|
+| Processeur   | Intel® Core™ i7-9700 CPU @ 3.00GHz × 8   | 
+| Capacité du disque  | 512 Go  | 
+| Nombre de coeurs | 8 | 
+| Nombre de Threads | 8  | 
+
+### Assignment102 
+
+* Scalabilité forte 
+
+Tests effectués : 
+
+| **numIterations** | **nbProcessor**                                | **Time Duration** |
+|-------------------|------------------------------------------------|-------------------|
+| 1 000 000         | 1 |   104.8           |
+| 1 000 000           | 2  |  132.8          |
+| 1 000 000        | 4      |  146.8            |
+| 1 000 000         | 8      | 397.4           |
+| 1 000 000         | 16    |  417.6          |
+
+<img height="350" width="600" src="../img/stabForteAssignment102G24.PNG" title="stab forte Assignment102 G24"/>
+<br><br>
+
+* Scalabilité faible 
+
+| **numIterations** | **nbProcessor**                                | **Time Duration** |
+|-------------------|------------------------------------------------|-------------------|
+| 1 000 000         | 1 |     90.6        |
+| 2 000 000           | 2  |   233.2          |
+| 4 000 000        | 4      |  433.8         |
+| 8 000 000         | 8      |  1391.6         |
+| 16 000 000         | 16    |  2624.4          |
+
+<img height="350" width="600" src="../img/stabFaibleAssignment102G24.png" title="stab faible Assignment102 G24"/>
+<br>
+
+### PI
+
+* Scalabilité forte  
+
+| **numIterations** | **nbProcessor**                                | **Time Duration** |
+|-------------------|------------------------------------------------|-------------------|
+| 1 000 000         | 1 |  346.4           |
+| 1 000 000           | 2  |  195.4         |
+| 1 000 000        | 4      |  110           |
+| 1 000 000         | 8      |  131.4         |
+| 1 000 000         | 16    |  133.8       |
+
+<img height="350" width="600" src="../img/stabFortePiG24.PNG" title="stab Forte Pi G24"/>
+<br><br>
+
+On observe une chute après 4 donc on s'arrête ici
+
+* Scalabilité faible  
+
+| **numIterations** | **nbProcessor**                                | **Time Duration** |
+|-------------------|------------------------------------------------|-------------------|
+| 1 000 000         | 1 |   348.6         |
+| 1 000 000           | 2  |  356.6            |
+| 1 000 000        | 4      |   360          |
+| 1 000 000         | 8      |  459.4          |
+| 1 000 000         | 16    |  840.4          |
+
+<img height="350" width="600" src="../img/stabFaiblePIG24.png" title="stab Faible pi G24"/>
+<br><br>
+
+Analyse : 
+
+Différences entre les deux : 
+
+Raisonnement : 
+
+### Evaluation numérique 
+
+Dans cette partie, nous allons nous appuyer sur la norme ISO 25010 qui définit un modèle de qualité pour les logiciels. Nous allons nous attarder plus précisément sur la sous-caractéristique "Efficiency" de la section "Quality in use". 
+
+Efficiency mesure la performance du logiciel lorsqu'il est utilisé par plusieurs utilisateurs en prenant en compte les facteurs tels que la vitesse, la productivité ou le temps. 
+
+
+Faire le plot de l'erreur en fonction du nombre d'itérations 

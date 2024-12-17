@@ -16,8 +16,8 @@ public class Pi
     public static void main(String[] args) throws Exception 
     {
 	int numWorker = 16;
-	int totalCount = 10000000 / numWorker;
-		//int totalCount = 10000000;
+	//int totalCount = 10000000 / numWorker; (scalabilité forte)
+	int totalCount = 10000000;
 	long total = 0;
 	// 10 workers, 50000 iterations each
 	for (int i = 0; i < 5; i++) {
@@ -59,7 +59,7 @@ class Master {
 	    }
 	double pi = 4.0 * total / totalCount / numWorkers;
 
-	String outputFilePath = "Pi_stabForte_PCperso.csv";
+	String outputFilePath = "Pi_stabFaible_G24.csv";
 
 	long stopTime = System.currentTimeMillis();
 	long duration = stopTime - startTime;

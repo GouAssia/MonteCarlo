@@ -41,7 +41,7 @@ def plot_scalability(csv_file, group_size=5):
     plt.plot(nbProcessor, [1]*len(nbProcessor), label="SpeedUp idéal", color='g', linestyle='--')
 
     # Configuration du graphique
-    plt.title("Pi : Scalabilité faible", fontsize=14)
+    plt.title("Pi salle G24 : Scalabilité faible", fontsize=14)
     plt.xlabel("Nombre de processeurs", fontsize=12)
     plt.ylabel("Speedup", fontsize=12)
     plt.legend()
@@ -50,4 +50,4 @@ def plot_scalability(csv_file, group_size=5):
     # Afficher le graphique
     plt.show()
 
-plot_scalability("Pi_stabFaible_PCperso.csv")
+plot_scalability("Pi_stabFaible_G24.csv")

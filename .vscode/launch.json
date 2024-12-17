@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Pi",
+            "request": "launch",
+            "mainClass": "Pi",
+            "projectName": "MonteCarlo_381c872a"
+        },
+        {
+            "type": "java",
+            "name": "Assignment102",
+            "request": "launch",
+            "mainClass": "Assignment102",
+            "projectName": "MonteCarlo_381c872a"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"
