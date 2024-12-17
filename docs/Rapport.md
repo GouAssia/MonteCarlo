@@ -158,6 +158,8 @@ Voici le diagramme de classe associé à ses classes :
 
 *figure 3 : Diagramme de classe des classes MasterSocket et WorkerSocket*
 
+Nous avons 2 classes principales MasterSocket et WorkerSocket. Les deux dépendent de l'instance de PrintWriter qu'elles créent pour écrire du contenu textuel. De plus, elles dépendent également toutes les deux de BufferedReader pour lire ces contenus textuels. Enfin, MasterSocket dépend de socket qui va permettre de faire la liaison entre Master et Worker pour communiquer. 
+
 ### 3.3 Application 
 
 Nous avons commencer par essayer d'exécuter le code WorkerSocket sauf que nous ne pouvions pas passer 2 arguments à la méthode main. Ce qui a été fait est que nous avons editer dans configurations/programs/arguments, nous avons mis le port à 25545 par exemple. 
@@ -252,6 +254,8 @@ Tests effectués :
 | 1 000 000         | 16    | 533,8 ms            |
 
 <img height="300" width="600" src="../img/stabForteAssignment102.png" title="scalabilite forte"/>
+<br>
+On observe que notre droite speed up ne suit pas la droite idéale (en bleue) ce qui signifie une performance mauvaise lorsque l'on augmente le nombre de processeurs (on le double). En effet, on voit une staturation car au fur et à mesure qu'on double le nombre de processeurs le speed up stagne autour de 1 et n'évolue pas. 
 <br><br>
 
 * Scalabilité faible 
@@ -266,6 +270,7 @@ Tests effectués :
 
 <img height="300" width="600" src="../img/stabFaibleAssignment102.png" title="scalabilite Faible"/>
 <br>
+On observe une chute du Speed up lorsque le nombre de processeurs augmente puis à partir de 8 processeurs il se stabilise mais reste mauvais. La courbe montre que le programme ne parvient pas à maintenir ses performances lorsqu'on augmente la taille du problème en même temps que le nombre de processeurs. 
 
 ### PI
 
@@ -280,6 +285,8 @@ Tests effectués :
 | 1 000 000         | 16    | 131 ms            |
 
 <img height="300" width="600" src="../img/stabFortePI.png" title="scalabilite Forte"/>
+<br>
+Nous observons que jusqu'à 2 processeurs la courbe du speed up égale celle idéale. Cependant, elle finit par subir des variations par la suite. 
 <br><br>
 
 * Scalabilité faible  
@@ -293,6 +300,8 @@ Tests effectués :
 | 1 000 000         | 16    | 196.6 ms            |
 
 <img height="300" width="600" src="../img/stabFaiblePI.png" title="scalabilite faible"/>
+<br>
+Nous observons une chute progressive de la courbe de speed up qui présente des résultats mauvais par rapport à celle idéale. 
 <br><br>
 
 J'ai par la suite réalisé ses expériences sur les machines en salles TP de la salle G24 pour pouvoir comparer les deux expériences.
@@ -321,7 +330,10 @@ Tests effectués :
 | 1 000 000         | 16    |  417.6          |
 
 <img height="350" width="600" src="../img/stabForteAssignment102G24.png" title="stab forte Assignment102 G24"/>
-<br><br>
+<br>
+On observe que notre droite speed up ne suit pas la droite idéale (en bleue) ce qui signifie une performance mauvaise lorsque l'on augmente le nombre de processeurs. La seule différence entre la courbe observée pour l'expérience avec mon ordinateur personnel est que de 2 à 4 la courbe est plus constante. 
+
+<br>
 
 * Scalabilité faible 
 
@@ -334,6 +346,8 @@ Tests effectués :
 | 16 000 000         | 16    |  2624.4          |
 
 <img height="350" width="600" src="../img/stabFaibleAssignment102G24.png" title="stab faible Assignment102 G24"/>
+<br>
+Nous observons la même courbe que l'exemple précédent avec mon ordinateur personnel. 
 <br>
 
 ### PI
@@ -349,9 +363,9 @@ Tests effectués :
 | 1 000 000         | 16    |  133.8       |
 
 <img height="350" width="600" src="../img/stabFortePiG24.png" title="stab Forte Pi G24"/>
+<br>
+Nous observons par rapport à la première courbe qu'elle se rapproche plus longtemps de la courbe idéale. 
 <br><br>
-
-On observe une chute après 4 donc on s'arrête ici
 
 * Scalabilité faible  
 
@@ -364,13 +378,13 @@ On observe une chute après 4 donc on s'arrête ici
 | 1 000 000         | 16    |  840.4          |
 
 <img height="350" width="600" src="../img/stabFaiblePIG24.png" title="stab Faible pi G24"/>
+<br>
+Enfin, contrairement à la courbe faite à partir des données de mon ordinateur personnel, on observe une chute directe. 
 <br><br>
 
-Analyse : 
+Conclusion : 
 
-Différences entre les deux : 
-
-Raisonnement : 
+Nous pouvons en conclure que sur cette expérience, pour les deux architectures, les résultats des courbes de speed up sont loins de l'idéal voulu. De plus, nous observons qu'il n'y a pas réellement de grosse différence de performance entre l'ordinateur de 4 coeurs et celui de 8. 
 
 
 Après avoir étudier les codes en mémoire partagée et réaliser des tests de performances, nous avons tous réalisé l'expérience en mémoire distribuée. Il s'agissait avec un Master et plusieurs workers de faire fonctionner la méthode de Monte Carlo, établir la scalabilité forte, faible et tracer la courbe de speed up. 
