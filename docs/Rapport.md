@@ -242,7 +242,11 @@ Tests effectués :
 | 1 000 000         | 8      | 553,2 ms             |
 | 1 000 000         | 16    | 533,8 ms            |
 
+<<<<<<< HEAD
 <img height="350" width="600" src="../img/stabForteAssignment102.png" title="stab forte Assignment102"/>
+=======
+<img height="300" width="600" src="../img/stabForteAssignment102.PNG" title="stab forte Assign"/>
+>>>>>>> 6e60c0cb48ef5456f263bd5207ea7a312b7871e0
 <br><br>
 
 * Scalabilité faible 
@@ -255,7 +259,11 @@ Tests effectués :
 | 8 000 000         | 8      | 4835.2 ms             |
 | 16 000 000         | 16    | 9770.4 ms            |
 
+<<<<<<< HEAD
 <img height="350" width="600" src="../img/stabFaibleAssignment102.png" title="stab faible Assignment102"/>
+=======
+<img height="300" width="600" src="../img/stabFaibleAssignment102.PNG" title="stab faible Assign"/>
+>>>>>>> 6e60c0cb48ef5456f263bd5207ea7a312b7871e0
 <br>
 
 ### PI
@@ -270,7 +278,11 @@ Tests effectués :
 | 1 000 000         | 8      | 103.6 ms             |
 | 1 000 000         | 16    | 131 ms            |
 
+<<<<<<< HEAD
 <img height="300" width="600" src="../img/stabFortePI.png" title="stab Forte Pi"/>
+=======
+<img height="300" width="600" src="../img/stabFortePI.PNG" title="stab forte PI"/>
+>>>>>>> 6e60c0cb48ef5456f263bd5207ea7a312b7871e0
 <br><br>
 
 * Scalabilité faible  
@@ -283,6 +295,7 @@ Tests effectués :
 | 1 000 000         | 8      | 103.2 ms             |
 | 1 000 000         | 16    | 196.6 ms            |
 
+<<<<<<< HEAD
 <img height="350" width="600" src="../img/stabFaiblePI.png" title="stab Faible pi"/>
 <br><br>
 
@@ -371,3 +384,7 @@ Efficiency mesure la performance du logiciel lorsqu'il est utilisé par plusieur
 
 
 Faire le plot de l'erreur en fonction du nombre d'itérations 
+=======
+<img height="300" width="600" src="../img/stabFaiblePI.PNG" title="stab Faible PI"/>
+<br><br>
+>>>>>>> 6e60c0cb48ef5456f263bd5207ea7a312b7871e0
