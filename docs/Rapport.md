@@ -297,7 +297,7 @@ Nous avons pu réalisé des expériences avec mes collègues qui seront présent
 
 ## <a name="p8"></a> Qualité et test de performance 
 
-Dans cette partie, nous allons nous appuyer sur la norme ISO 25010 qui définit un modèle de qualité pour les logiciels. Nous allons nous attarder plus précisément sur la sous-caractéristique "Efficiency" de la section "Quality in use". Efficiency mesure la performance du logiciel lorsqu'il est utilisé par plusieurs utilisateurs en prenant en compte les facteurs tels que la vitesse, la productivité ou le temps. 
+Dans cette partie, nous allons nous appuyer sur la norme ISO 25010 qui définit un modèle de qualité pour les logiciels. Nous allons nous attarder plus précisément sur la sous-caractéristique "Efficiency" de la section "Quality in use". Efficiency mesure la performance du logiciel lorsqu'il est utilisé par plusieurs utilisateurs en prenant en compte le facteurs temps. 
 
 Le temps se calcule de la manière suivante : 
 ```
@@ -562,39 +562,4 @@ Nous obtenons ainsi le nuage de point suivant avec les données ci-dessus :
 
 <img height="300" width="650" src="../img/Pi_scalForteErreur.PNG" title="erreur"/>
 
-### PI
 
-* Scalabilité faible  
-
-| Nombre d'itérations | Error     |
-|---------------------|-----------|
-| 1000000             | 0,000459  |
-| 1000000             | 0,000965  |
-| 1000000             | -0,000406 |
-| 1000000             | -0,000448 |
-| 1000000             | -0,000404 |
-| 2000000             | -0,000246 |
-| 2000000             | -0,000224 |
-| 2000000             | 0,000670  |
-| 2000000             | 0,000001  |
-| 2000000             | -0,000022 |
-| 4000000             | -0,000170 |
-| 4000000             | 0,000085  |
-| 4000000             | -0,000036 |
-| 4000000             | -0,000292 |
-| 4000000             | -0,000400 |
-| 8000000             | 0,000254  |
-| 8000000             | -0,000047 |
-| 8000000             | -0,000081 |
-| 8000000             | 0,000044  |
-| 8000000             | 0,000086  |
-| 16000000            | 0,000016  |
-| 16000000            | 0,000002  |
-| 16000000            | -0,000014 |
-| 16000000            | -0,000006 |
-| 16000000            | -0,000099 |
-
-
-Nous obtenons ainsi le nuage de point suivant avec les données ci-dessus : 
-
-<img height="300" width="650" src="../img/Pi_scalFaibleErreur.PNG" title="erreur"/>
