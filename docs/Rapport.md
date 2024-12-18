@@ -30,15 +30,100 @@ Ce document permet de mettre en avant ce qui a été vu lors des séances de TP 
 
 ## <a name="p1"></a> I - Introduction
 
-Dans ce document, nous avons commencé par introduire la méthode de Monte Carlo qui est une technique statistique utilisée pour résoudre des problèmes mathématiques complexes en faisant des simulations aléatoires. 
-Par la suite, nous avons à l'aide de cette méthode réalisée des tests de performance en mémoire partagée et distribuée. 
+Dans ce document, nous avons commencé par introduire la méthode de Monte Carlo et nous avons à l'aide de cette méthode réalisée des tests de performance en mémoire partagée et distribuée. 
 
 ## <a name="p2"></a> II - TP
 
 ## <a name="p3"></a> Méthode Monte Carlo
 ----------
+La méthode Monte Carlo est une technique probabiliste utilisée pour résoudre des problèmes mathématiques complexes en faisant des simulations aléatoires. 
+Nous avons vu en détails la méthode Monte Carlo et son fonctionnement pour approximer la valeur de Pi. 
+
+La méthode consiste à tirer un grand nombre de points aléatoires dans une zone donnée et d'analyser la proportion de ces points qui tombent dans la cible. 
+
+Nous allons nous imaginer un carré de côté 1 où l'on insère dedans un quart de cercle de rayon 1. L'aire du carré est 1 tandis que celui du quart de cercle s'exprime sous la forme suivante : 
+
+```
+A = A=(πr**2)/4   soit A = π/4
+```
+
+Maintenant, nous allons effectuer le tirage de points aléatoires. On a : 
+
+P = (xp, yp)
+
+Chaque coordonnée xp et yp est tirée selon une loi uniforme entre 0 et 1. C'est à dire qu'ils sont égals à 0 ou 1. 
+
+Nous pouvons déterminer la proportion de points présents à l'intérieur de la cible (le quart de cercle) avec la formule suivante : 
+
+Nombre de points dans la cible : ncible
+Nombre total de points : ntot
+
+```
+ncible/ntot  = π/4
+```
+Ainsi, pour estimer la valeur de PI on multiplie par 4 : 
+
+```
+(4*ncible)/ntot  = π/4
+```
+<img height="300" width="400" src="../img/MonteCarlo.PNG" title="Monte Carlo"/>
 
 ## <a name="p3A"></a> Alogorithme et parallélisation
+
+Après avoir décider que nous allons nous appuyer sur un parallélisme de tâche, nous avons décidé de séparer les différentes tâches. 
+
+T0 : Tirer et compter le nombre de total de points
+T1 : Calculer Pi
+
+Une fois la séparation des tâches faites, nous les avons décomposé en sous-tâche : 
+
+T0p1 : Tirer xp 
+T0p2 : Incrémenter ncible (les points dans la cible)
+
+Une fois les sous-tâches déterminées, nous avons trouver les dépendances suivantes : 
+T1 dépend de T0 
+T0p2 dépend de T0p1
+
+Nous avons réfléchi et réalisé les pseudo-code suivants : 
+
+* Itération parallèle 
+
+```
+initialiser n_cible à 0
+
+pour p allant de 0 à n_tot-1
+
+    xp = valeur alléatoire en 0 et 1
+    yp = valeur alléatoire en 0 et 1
+
+    si (xp au carré + yp au carré) inferieur à 1
+        ajouter 1 à n_cible
+    fin si
+
+fin pour
+
+calculer pi = 4 * n_cible / n_tot
+```
+
+* Master/Worker 
+
+```
+Worker_MC : parametre(n_tot)
+    initialiser n_cible à 0
+
+    pour p allant de 0 à n_tot-1
+
+        xp = valeur alléatoire en 0 et 1
+        yp = valeur alléatoire en 0 et 1
+
+        si (xp au carré + yp au carré) inferieur à 1
+            ajouter 1 à n_cible
+        fin si
+
+    fin pour
+
+revoyer n_cible
+```
 
 ## <a name="p4"></a> Mise en oeuvre sur machine à mémoire partagée (Assignment102.java)
 
